@@ -1,0 +1,24 @@
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+jwt:
+  secret: 
+      access: 984hg493gh0439rthr0429uruj2309yh937gc763fe87t3f89723gfsdfghjkllkjhgfdfghfghjhgfghlkjhgfds
+      refresh: sdfghjkjhgfdsasdfghjkhgfdsaasdfghjkllkjhgfdsdfghjkllkjhgfdfghjklfdfghjklkjhgfdfghfddfghjdd
+  lifetime: 200m
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/HotelReservations
+    username: postgres
+    password: sherlock221
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      entityManagerFactoryInterface: jakarta.persistence.EntityManagerFactory
+  
+  main:
+    allow-circular-references: true
+ 
+ 
