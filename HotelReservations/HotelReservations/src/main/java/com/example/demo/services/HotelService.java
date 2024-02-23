@@ -55,10 +55,14 @@ public class HotelService {
         hotelCard.setAddress(hotel.getAddress());
         hotelCard.setImgUrl(hotel.getImgUrl());
         hotelCard.setPrice(hotel.getPrice());
-        Long count_raiting=hotel.getRatings_count();
-        Double total_raiting=hotel.getTotal_rating();
-        hotelCard.setRating(total_raiting/count_raiting);
+        
+        Long countRating = hotel.getRatings_count();
+        Long totalRating = hotel.getTotal_rating();
+        
+        Double rating = ((double) totalRating / countRating)+(totalRating % countRating);
+        hotelCard.setRating(rating);
         hotelCard.setGeography(hotel.getGeography());
+    
         return hotelCard;
     }
     

@@ -7,7 +7,7 @@ public class HotelCard {
     private String name;
     private String address;
     private Double rating;
-    private Integer price;
+    private Double price;
     private String geography;
     private String imgUrl;
     
@@ -42,10 +42,10 @@ public class HotelCard {
     public void setRating(Double rating) {
         this.rating = rating;
     }
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
     

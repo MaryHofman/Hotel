@@ -43,18 +43,24 @@ public class UserService implements UserDetailsService {
 
         List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(user.getRoles().toString()));
         return new org.springframework.security.core.userdetails.User(
-                user.getUsername(),
+                user.getEmail(),
                 user.getPassword(),
                 authorities
         );
     }
 
+
     public Users createNewUser(RegistrationUserDTO registrationUserDto) {
         Users user = new Users();
-        user.setUsername(registrationUserDto.getUsername());
+        user.setFirstName(registrationUserDto.getFirstName());
+        user.setSecondName(registrationUserDto.getSecondName());
         user.setEmail(registrationUserDto.getEmail());
         user.setPassword(passwordEncoder.encode(registrationUserDto.getPassword()));
-        user.setRoles(List.of(roleService.getUserRole()));
+        user.setRoles(List.of(roleService.getUserRole(registrationUserDto.getRole())));
         return userRepository.save(user);
+    }
+
+    public Users saveUpdateUser(Users user) {   
+        return userRepository.save(user); 
     }
 }

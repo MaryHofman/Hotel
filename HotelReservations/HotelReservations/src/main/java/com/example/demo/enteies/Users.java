@@ -14,8 +14,11 @@ public class Users {
     @Column(name="user_id")
     private Long id;
 
-    @Column(name="username")
-    private String username;
+    @Column(name="firstname")
+    private String firstName;
+
+    @Column(name="secondname")
+    private String secondName;
 
     @Column(name="password")
     private String password;
@@ -30,6 +33,9 @@ public class Users {
 
     @Column(name="email")
     private String email;
+
+    @Column(name="imgURL")
+    private String imgURL;
 
     
 }

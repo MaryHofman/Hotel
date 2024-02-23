@@ -26,11 +26,11 @@ public class Hotel {
     @Column(name="address")
     private String address;
     @Column(name="price")
-    private Integer price;
+    private Double price;
     @Column(name="ratings_count")
     private Long ratings_count;
     @Column(name="total_rating")
-    private Double total_rating;
+    private Long total_rating;
     @Column(name="geography")
     private String geography;
     @Column(name="user_id")
