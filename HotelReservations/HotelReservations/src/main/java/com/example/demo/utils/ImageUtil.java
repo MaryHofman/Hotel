@@ -12,17 +12,17 @@ import java.nio.file.Paths;
 
 @Component
 public class ImageUtil {
-    private final String UPLOAD_DIR = "/images/ProfileImg";
+   
 
-    public  String saveImage(MultipartFile file) throws IOException {
+    public  String saveImage(MultipartFile file, String path) throws IOException {
         if (file != null && !file.isEmpty()) {
             String fileName = StringUtils.cleanPath(file.getOriginalFilename());
             fileName = System.currentTimeMillis() + "-" + fileName; 
-            File uploadDir = new File(UPLOAD_DIR);
+            File uploadDir = new File(path);
             if (!uploadDir.exists()) {
                 uploadDir.mkdirs();}
 
-            Path filePath = Paths.get(UPLOAD_DIR + File.separator + fileName);
+            Path filePath = Paths.get(path + File.separator + fileName);
             Files.copy(file.getInputStream(), filePath);
             return fileName; 
         } else {
@@ -31,8 +31,8 @@ public class ImageUtil {
     }
 
 
-    public  void deleteImage(String fileName) throws IOException {
-        Path imagePath = Paths.get(UPLOAD_DIR + File.separator + fileName);
+    public  void deleteImage(String fileName, String path) throws IOException {
+        Path imagePath = Paths.get(path + File.separator + fileName);
         Files.deleteIfExists(imagePath);
     }
 }

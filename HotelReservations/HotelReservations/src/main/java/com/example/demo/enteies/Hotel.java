@@ -37,6 +37,9 @@ public class Hotel {
     private Long user_id;
     @Column(name="main_image_url")
     private String imgUrl;
+    @Column(name="description")
+    private String description;
+    
 
     
 }

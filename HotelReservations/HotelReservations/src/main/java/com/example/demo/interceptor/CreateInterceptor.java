@@ -36,7 +36,7 @@ public class CreateInterceptor implements HandlerInterceptor {
 
                 System.out.println(roleNames);
                 
-                if(roleNames.contains("ADMIN")){
+                if(roleNames.contains("AUTHOR")){
                 String firstName = (String) claims.get("firstName");
                 request.setAttribute("username", firstName);
                 return true;}
