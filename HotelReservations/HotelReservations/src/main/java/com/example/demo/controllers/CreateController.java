@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
+import com.example.demo.DTO.GeoIP;
 import com.example.demo.DTO.HotelDTO;
 import com.example.demo.DTO.InformationAboutHotel;
 import com.example.demo.enteies.Hotel;
@@ -21,12 +22,13 @@ public class CreateController {
     private HotelService hotelService;
 
     @PostMapping("/create")
-    public ResponseEntity<?> createArticle(@RequestBody InformationAboutHotel informationAboutHotel,  @RequestHeader("Authorization") String jwtToken) throws IOException {
+    public ResponseEntity<?> createHotel(@RequestBody InformationAboutHotel informationAboutHotel, @RequestHeader("Authorization") String jwtToken) throws IOException {
         return hotelService.createCard(informationAboutHotel, jwtToken);
     }
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteArticle(@RequestBody Long id_article) {
-        return null;
+    public ResponseEntity<?> deleteHotel(@RequestBody Long id_article,@RequestHeader("Authorization") String jwtToken) throws IOException {
+        return hotelService.deleteInformationAboutHotel(id_article, jwtToken);
     }
+    
     
 }

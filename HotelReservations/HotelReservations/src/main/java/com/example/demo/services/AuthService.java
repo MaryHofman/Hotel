@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.demo.DTO.InformationAboutUser;
 import com.example.demo.DTO.JwtRequest;
 import com.example.demo.DTO.JwtResponse;
+import com.example.demo.DTO.RefreshTokenRequest;
 import com.example.demo.DTO.RegistrationUserDTO;
 import com.example.demo.configurations.JWTprovider;
 import com.example.demo.enteies.Role;
@@ -150,5 +151,20 @@ public class AuthService {
             return ResponseEntity.ok(userService.saveUpdateUser(user));
         }
        
+    }
+
+    public ResponseEntity<?> checkValidToken(String token){
+        return ResponseEntity.ok(jwtProvider.validateAccessToken(token));
+    }
+
+    public ResponseEntity<?> refreshAccessToken(RefreshTokenRequest refreshTokenRequest) {
+        if(jwtProvider.validateRefreshToken(refreshTokenRequest.getRefreshToken())){
+            Claims refreshClaims = jwtProvider.getRefreshClaims(refreshTokenRequest.getRefreshToken());
+            String userEmail = refreshClaims.getSubject();
+            Users user=userService.findByUsername(userEmail).get();
+
+            return ResponseEntity.ok(jwtProvider.generateAccessToken(user));
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 }

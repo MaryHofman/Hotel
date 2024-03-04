@@ -13,6 +13,7 @@ public class InformationAboutHotel {
     private Double price;
     private List<MultipartFile> allImgs;
     private String[] extras;
+    private GeoIP geo;
 
     public String getName() {
         return name;
@@ -61,6 +62,12 @@ public class InformationAboutHotel {
     }
     public void setExtras(String[] extras) {
         this.extras = extras;
+    }
+    public GeoIP getGeo() {
+        return geo;
+    }
+    public void setGeo(GeoIP geo) {
+        this.geo = geo;
     }
 
     

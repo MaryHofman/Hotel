@@ -39,6 +39,7 @@ public class Hotel {
     private String imgUrl;
     @Column(name="description")
     private String description;
+   
     
 
     

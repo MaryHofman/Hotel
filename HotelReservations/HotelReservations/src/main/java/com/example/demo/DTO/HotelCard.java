@@ -4,12 +4,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class HotelCard {
    
+    private Long Id;
     private String name;
     private String address;
     private Double rating;
     private Double price;
     private String geography;
     private String imgUrl;
+    
     
     public String getName() {
         return name;
@@ -47,6 +49,12 @@ public class HotelCard {
     }
     public void setPrice(Double price) {
         this.price = price;
+    }
+    public Long getId() {
+        return Id;
+    }
+    public void setId(Long id) {
+        Id = id;
     }
     
     
