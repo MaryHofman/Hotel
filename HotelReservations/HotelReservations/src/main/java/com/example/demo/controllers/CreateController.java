@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.example.demo.DTO.GeoIP;
 import com.example.demo.DTO.HotelDTO;
+import com.example.demo.DTO.IdWrapper;
 import com.example.demo.DTO.InformationAboutHotel;
 import com.example.demo.enteies.Hotel;
 import com.example.demo.services.HotelService;
@@ -25,10 +26,11 @@ public class CreateController {
     public ResponseEntity<?> createHotel(@RequestBody InformationAboutHotel informationAboutHotel, @RequestHeader("Authorization") String jwtToken) throws IOException {
         return hotelService.createCard(informationAboutHotel, jwtToken);
     }
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteHotel(@RequestBody Long id_article,@RequestHeader("Authorization") String jwtToken) throws IOException {
-        return hotelService.deleteInformationAboutHotel(id_article, jwtToken);
-    }
     
+    @DeleteMapping("/delete")
+public ResponseEntity<?> deleteHotel(@RequestBody IdWrapper idWrapper, @RequestHeader("Authorization") String jwtToken) throws IOException {
+    return hotelService.deleteInformationAboutHotel(idWrapper.getId_article(), jwtToken);
+}
+
     
 }

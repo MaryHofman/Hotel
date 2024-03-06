@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.enteies.Hotel;
 import com.example.demo.enteies.Room;
 import com.example.demo.reposytories.RoomRepository;
 
@@ -24,7 +25,7 @@ public class RoomService {
         
     }
 
-    public List<Room> findAllByHotelId(Long hotelId){
+    public List<Room> findAllByHotelId(Hotel hotelId){
         List<Room> rooms=roomRepository.findAllByHotelId(hotelId);
         return rooms;
     }

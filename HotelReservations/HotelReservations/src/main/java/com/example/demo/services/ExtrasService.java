@@ -2,8 +2,10 @@ package com.example.demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.enteies.Extras;
+import com.example.demo.enteies.Hotel;
 import com.example.demo.reposytories.ExtrasRepository;
 
 import java.util.List;
@@ -25,8 +27,13 @@ public class ExtrasService {
         return extrasRepository.findAll();
     }
 
-    public String[] getAllByHotelId(Long hotelId){
+    public String[] getAllByHotelId(Hotel hotelId){
             return extrasRepository.findAllByHotelId(hotelId);
+    }
+
+    @Transactional
+    public void deleteByHotelId(Hotel hotelId){
+        extrasRepository.deleteByHotelId(hotelId);
     }
 
 }

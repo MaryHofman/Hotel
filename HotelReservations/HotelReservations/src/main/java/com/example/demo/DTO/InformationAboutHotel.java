@@ -14,7 +14,7 @@ public class InformationAboutHotel {
     private List<MultipartFile> allImgs;
     private String[] extras;
     private GeoIP geo;
-    private List<Room> rooms;
+    private List<RoomDTO> rooms;
 
     public String getName() {
         return name;
@@ -59,10 +59,10 @@ public class InformationAboutHotel {
     public void setGeo(GeoIP geo) {
         this.geo = geo;
     }
-    public List<Room> getRooms() {
+    public List<RoomDTO> getRooms() {
         return rooms;
     }
-    public void setRooms(List<Room> rooms) {
+    public void setRooms(List<RoomDTO> rooms) {
         this.rooms = rooms;
     }
 

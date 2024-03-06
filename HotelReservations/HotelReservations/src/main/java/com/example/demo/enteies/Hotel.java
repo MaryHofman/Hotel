@@ -1,14 +1,17 @@
 package com.example.demo.enteies;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -51,4 +54,10 @@ public class Hotel {
     
     @Column(name="description")
     private String description;
+
+    @OneToMany(mappedBy = "hotelId", cascade = CascadeType.REMOVE)
+    private List<Room> rooms;
+
+    @OneToMany(mappedBy = "hotelId", cascade = CascadeType.REMOVE)
+    private List<Extras> extras;
 }

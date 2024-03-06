@@ -1,10 +1,12 @@
 package com.example.demo.enteies;
 
+import org.hibernate.annotations.Cascade;
+
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "rooms")
+@Table(name = "room")
 @Data
 public class Room {
     
@@ -13,11 +15,10 @@ public class Room {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "room_number", nullable = false)
-    private int roomNumber;
-
-    @Column(name = "hotel_id", nullable = false)
-    private int hotelId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "hotel_id", referencedColumnName = "hotel_id")
+    @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
+    private Hotel hotelId;
 
     @Column(name = "room_type", nullable = false, length = 50)
     private String roomType;
@@ -25,7 +26,7 @@ public class Room {
     @Column(name = "price", nullable = false, columnDefinition = "DOUBLE PRECISION")
     private Double price;
 
-    @Column(name = "is_occupied", nullable = false)
-    private boolean isOccupied;
+    @Column(name = "description")
+    private String description;
 }
 
