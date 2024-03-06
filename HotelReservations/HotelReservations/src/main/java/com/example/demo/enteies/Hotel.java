@@ -20,27 +20,35 @@ public class Hotel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="hotel_id")
-    private Long hotel_id;
+    private Long hotelId;
+    
     @Column(name="name")
     private String name;
+    
     @Column(name="address")
     private String address;
+    
     @Column(name="price")
     private Double price;
+    
     @Column(name="ratings_count")
-    private Long ratings_count;
+    private Long ratingsCount;
+    
     @Column(name="total_rating")
-    private Long total_rating;
-    @Column(name="geography")
-    private String geography;
+    private Long totalRating;
+    
+    @Column(name="latitude")
+    private Double latitude;
+    
+    @Column(name="longitude")
+    private Double longitude;
+    
     @Column(name="user_id")
-    private Long user_id;
+    private Long userId;
+    
     @Column(name="main_image_url")
     private String imgUrl;
+    
     @Column(name="description")
     private String description;
-   
-    
-
-    
 }

@@ -19,13 +19,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.DTO.GeoIP;
 import com.example.demo.DTO.HotelCard;
+import com.example.demo.DTO.HotelCoordinates;
 import com.example.demo.DTO.HotelDTO;
 import com.example.demo.DTO.InformationAboutHotel;
+import com.example.demo.DTO.MainInformationAboutHotel;
 import com.example.demo.DTO.PartsOfArticle;
 import com.example.demo.configurations.JWTprovider;
 import com.example.demo.enteies.Extras;
 import com.example.demo.enteies.Hotel;
-import com.example.demo.enteies.HotelCoordinates;
+import com.example.demo.enteies.Room;
 import com.example.demo.enteies.Users;
 import com.example.demo.reposytories.HotelRepository;
 import com.example.demo.utils.ImageUtil;
@@ -52,11 +54,9 @@ public class HotelService {
     @Autowired
     private ExtrasService extrasService;
     @Autowired
-    private HotelCoordinatesService hotelCoordinatesService;
+    private RoomService roomService;
     
     private static final double EARTH_RADIUS = 6371.0;
-   
-
 
     @Transactional
     public List<HotelCard> GetInformationAboutAllHotels() {
@@ -68,19 +68,17 @@ public class HotelService {
 
     private HotelCard convertToHotelCard(Hotel hotel) {
         HotelCard hotelCard = new HotelCard();
-        hotelCard.setId(hotel.getHotel_id());
+        hotelCard.setId(hotel.getHotelId());
         hotelCard.setName(hotel.getName());
         hotelCard.setAddress(hotel.getAddress());
         hotelCard.setImgUrl(hotel.getImgUrl());
-        hotelCard.setPrice(hotel.getPrice());
-        
-        Long countRating = hotel.getRatings_count();
-        Long totalRating = hotel.getTotal_rating();
-        
+        hotelCard.setPrice(hotel.getPrice());   
+        Long countRating = hotel.getRatingsCount();
+        Long totalRating = hotel.getTotalRating();  
         Double rating = ((double) totalRating / countRating)+(totalRating % countRating);
         hotelCard.setRating(rating);
-        hotelCard.setGeography(hotel.getGeography());
-    
+        hotelCard.setLatitude(hotel.getLatitude());
+        hotelCard.setLongitude(hotel.getLongitude());
         return hotelCard;
     }
 
@@ -90,18 +88,13 @@ public class HotelService {
         hotel.setName(informationAboutHotel.getName());
         hotel.setAddress(informationAboutHotel.getAddress());
         hotel.setDescription(informationAboutHotel.getDescription());
-        hotel.setGeography(informationAboutHotel.getGeography());
-        hotel.setPrice(informationAboutHotel.getPrice());
-
-        HotelCoordinates coordinates=new HotelCoordinates();
-        coordinates.setHotelId(hotel.getHotel_id());
-        coordinates.setLatitude(informationAboutHotel.getGeo().getLatitude());
-        coordinates.setLongitude(informationAboutHotel.getGeo().getLongitude());
+        hotel.setLatitude(informationAboutHotel.getGeo().getLatitude());
+        hotel.setLongitude(informationAboutHotel.getGeo().getLongitude());
 
         String email = jwTprovider.getAccessClaims(jwtToken).get("firstName").toString();
         Users user=userService.findByUsername(email).get();
 
-        hotel.setUser_id(user.getId());
+        hotel.setUserId(user.getId());
         String mainPath="/img/hotelIMG";
         String mainURL= imageUtil.saveImage(informationAboutHotel.getMainImg(),mainPath);
 
@@ -109,17 +102,17 @@ public class HotelService {
 
         for(MultipartFile file: informationAboutHotel.getAllImgs()){
             String url=imageUtil.saveImage(file, mainPath);
-            hotelImageService.saveImg(hotel.getHotel_id(), url);
+            hotelImageService.saveImg(hotel.getHotelId(), url);
         }
 
         Extras extras=new Extras();
-        extras.setHotelId(hotel.getHotel_id());
+        extras.setHotelId(hotel.getHotelId());
         extras.setStringArray(informationAboutHotel.getExtras());
-
         extrasService.saveExtras(extras);
-
-        hotelCoordinatesService.save(coordinates);
-
+        List <Room> rooms=informationAboutHotel.getRooms();
+        for(Room r:rooms){
+            roomService.saveRoom(r);
+        }
 
         return ResponseEntity.ok("Данные об отеле успешно сохранены!");
     }
@@ -152,7 +145,9 @@ public class HotelService {
     
 
     public List<HotelCard> takeTheNearest(GeoIP geo, HttpServletRequest request) throws IOException, GeoIp2Exception {
-        List<HotelCoordinates> coordinates = hotelCoordinatesService.getAllCoordinatesOfHotels();
+        
+        List<HotelCoordinates> coordinates=hotelRepository.findLatitudeAndLongitudeById();
+        
         Map<Long, Double> mapCoordinates=new HashMap<>();
         
         for(HotelCoordinates c: coordinates){
@@ -177,7 +172,6 @@ public class HotelService {
     public static <K, V extends Comparable<? super V>> Map<K, V> sortByValueAscending(Map<K, V> map) {
         List<Map.Entry<K, V>> list = new LinkedList<>(map.entrySet());
         Collections.sort(list, Comparator.comparing(Map.Entry::getValue));
-
         Map<K,V> result = new LinkedHashMap<>();
         for (Map.Entry<K,V> entry : list) {
             result.put(entry.getKey(), entry.getValue());
@@ -190,6 +184,7 @@ public class HotelService {
         Hotel hotel=hotelRepository.findById(id_hotel).get();
         imageUtil.deleteImage("/img/hotelIMG", hotel.getImgUrl());
         hotelRepository.delete(hotel);
+        roomService.deleteRoom(id_hotel);
         return ResponseEntity.ok("Запись об отеле удалена");
     }
 
@@ -203,6 +198,49 @@ public class HotelService {
             return m/l+m%l;
     }
 
+    public MainInformationAboutHotel getHotelById(Long id) {
+        MainInformationAboutHotel information = new MainInformationAboutHotel();
+        Hotel hotel= hotelRepository.findById(id).get();
+        List<Room> roms=roomService.findAllByHotelId(id);
+        String[] extra=extrasService.getAllByHotelId(id);
+        List<String> imgsURL=hotelImageService.getAllImagesURL(id);
+        GeoIP geo=new GeoIP();
+        geo.setLatitude(hotel.getLatitude());
+        geo.setLongitude(hotel.getLongitude());
+
+        information.setName(hotel.getName());
+        information.setDescription(hotel.getDescription());
+        information.setAddress(hotel.getAddress());
+        information.setMainImgURL(hotel.getImgUrl());
+        information.setAllImgsURL(imgsURL);
+        information.setRooms(roms);
+        information.setGeo(geo);
+        information.setExtras(extra);
+        return information;
+    }
+
+    public List<HotelCard> takeTheBest() {
+        Iterable <Hotel> hotels=hotelRepository.findAll();
+        Map<Long,Hotel> mapOfHotels=new HashMap<>();
+
+        for( Hotel h: hotels){
+            mapOfHotels.put((h.getTotalRating()/h.getRatingsCount()+h.getTotalRating()%h.getRatingsCount()), h);
+        }
+
+    Map<Long, Hotel> sortedByRating = mapOfHotels.entrySet().stream()
+    .sorted(Map.Entry.comparingByKey(Comparator.reverseOrder())) 
+    .limit(10) 
+    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+    List<HotelCard> hotelCard = new ArrayList<>();
+
+    for (Map.Entry<Long, Hotel> entry : sortedByRating.entrySet()) {
+        Hotel hotel = entry.getValue();
+        HotelCard card = convertToHotelCard(hotel);
+        hotelCard.add(card);
+    }
+
+        return hotelCard;
+    }
 
     
 }

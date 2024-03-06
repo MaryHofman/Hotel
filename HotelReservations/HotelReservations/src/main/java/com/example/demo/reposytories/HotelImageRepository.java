@@ -10,5 +10,6 @@ import com.example.demo.enteies.HotelImage;
     public interface HotelImageRepository extends CrudRepository<HotelImage, Long>{
         public List<HotelImage> findAllImagesByHotelId(Long hotelId);
         public void deleteAllImagesByHotelId(Long hotelId);
+        public List<String> findAllImgsUrlByHotelId(Long hotelId);
     }
 

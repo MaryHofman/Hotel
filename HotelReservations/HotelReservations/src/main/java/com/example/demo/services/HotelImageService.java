@@ -31,6 +31,10 @@ public class HotelImageService {
                 imageUtil.deleteImage("/img/hotelIMG", hotelImage.getImageUrl());}
             hotelImageRepository.deleteAllImagesByHotelId(hotel_id);}
 
+    public List<String> getAllImagesURL(Long hotelId){
+        return hotelImageRepository.findAllImgsUrlByHotelId(hotelId);
+    }
+
     
     
 }

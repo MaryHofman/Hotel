@@ -9,10 +9,23 @@ public class HotelCard {
     private String address;
     private Double rating;
     private Double price;
-    private String geography;
+    private Double latitude;
+    private Double longitude;
     private String imgUrl;
     
     
+    public Double getLatitude() {
+        return latitude;
+    }
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+    public Double getLongitude() {
+        return longitude;
+    }
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
     public String getName() {
         return name;
     }
@@ -26,12 +39,7 @@ public class HotelCard {
         this.address = address;
     }
   
-    public String getGeography() {
-        return geography;
-    }
-    public void setGeography(String geography) {
-        this.geography = geography;
-    }
+   
     public String getImgUrl() {
         return imgUrl;
     }

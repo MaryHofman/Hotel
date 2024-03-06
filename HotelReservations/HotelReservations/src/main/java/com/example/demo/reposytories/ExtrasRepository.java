@@ -7,5 +7,5 @@ import com.example.demo.enteies.Extras;
 
 @Repository
 public interface ExtrasRepository extends JpaRepository<Extras, Long> {
-   
+    String[] findAllByHotelId(Long hotelId);
 }

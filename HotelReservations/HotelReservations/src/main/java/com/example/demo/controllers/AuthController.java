@@ -27,32 +27,32 @@ public class AuthController {
     private final AuthService authService;
     private final UserRepository userRepository;
   
-
+    //авторизация
     @PostMapping("/login")
     public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest) { 
         return authService.createAuthToken(authRequest);
     }
-
+    //регистрация
     @PostMapping("/registration")
     public ResponseEntity<?> createNewUser(@RequestBody RegistrationUserDTO registrationUserDto) {
         return authService.createNewUser(registrationUserDto);
     }
-
+    //изменение информации в профиле пользователя
     @PutMapping("/profile")
     public ResponseEntity<?> editUserProfile(@RequestBody InformationAboutUser userProfile) {
         return authService.changeProfile(userProfile);
     }
-
+    // изменение фотографии пользователя
     @PutMapping("/changePhoto")
     public ResponseEntity<?> changePhoto(@RequestBody MultipartFile  profilePhoto,   @RequestHeader(name = "Authorization") String accessToken) throws IOException {
         return authService.changePhoto(profilePhoto,accessToken);
     }
-
+    //проверка access токена
     @PostMapping("/checkToken")
     public ResponseEntity<?> checkToken(@RequestHeader(name = "Authorization") String accessToken){
         return authService.checkValidToken(accessToken);
     }
-
+    //получение нового access токена по refresh токену
     @PostMapping("/refreshToken")
     public ResponseEntity<?> refreshAccessToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
            return authService.refreshAccessToken(refreshTokenRequest);

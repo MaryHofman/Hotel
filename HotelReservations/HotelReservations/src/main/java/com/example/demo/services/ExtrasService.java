@@ -25,4 +25,8 @@ public class ExtrasService {
         return extrasRepository.findAll();
     }
 
+    public String[] getAllByHotelId(Long hotelId){
+            return extrasRepository.findAllByHotelId(hotelId);
+    }
+
 }

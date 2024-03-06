@@ -2,20 +2,18 @@ package com.example.demo.DTO;
 
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import com.example.demo.enteies.Room;
 
-public class InformationAboutHotel {
+public class MainInformationAboutHotel {
     private String name;
     private String description;
     private String address;
-    private MultipartFile mainImg;
-    private List<MultipartFile> allImgs;
+    private String mainImgURL;
+    private List<String> allImgsURL;
     private String[] extras;
     private GeoIP geo;
     private List<Room> rooms;
-
+    
     public String getName() {
         return name;
     }
@@ -28,24 +26,23 @@ public class InformationAboutHotel {
     public void setDescription(String description) {
         this.description = description;
     }
-    public MultipartFile getMainImg() {
-        return mainImg;
-    }
-    public void setMainImg(MultipartFile mainImg) {
-        this.mainImg = mainImg;
-    }
-    
-    public List<MultipartFile> getAllImgs() {
-        return allImgs;
-    }
-    public void setAllImgs(List<MultipartFile> allImgs) {
-        this.allImgs = allImgs;
-    }
     public String getAddress() {
         return address;
     }
     public void setAddress(String address) {
         this.address = address;
+    }
+    public String getMainImgURL() {
+        return mainImgURL;
+    }
+    public void setMainImgURL(String mainImgURL) {
+        this.mainImgURL = mainImgURL;
+    }
+    public List<String> getAllImgsURL() {
+        return allImgsURL;
+    }
+    public void setAllImgsURL(List<String> allImgsURL) {
+        this.allImgsURL = allImgsURL;
     }
     public String[] getExtras() {
         return extras;

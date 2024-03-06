@@ -43,9 +43,9 @@ public class HotelCommentService {
 
     public NewRaiting calculateHotelRating(reitingDTO reiting) {
         Hotel hotel=hotelService.findHotelById(reiting.getHotelId());
-        float newRaiting=hotelService.changeInformationAboutRaiting(reiting.getHotelId(), hotel.getRatings_count()+1, reiting.getRaiting()+hotel.getTotal_rating());
+        float newRaiting=hotelService.changeInformationAboutRaiting(reiting.getHotelId(), hotel.getRatingsCount()+1, reiting.getRaiting()+hotel.getTotalRating());
         NewRaiting raiting=new NewRaiting();
-        raiting.setHotelId(hotel.getHotel_id());
+        raiting.setHotelId(hotel.getHotelId());
         raiting.setNewRaiting(newRaiting);
         return raiting;
     }
