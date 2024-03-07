@@ -11,7 +11,7 @@ public class MainInformationAboutHotel {
     private String mainImgURL;
     private List<String> allImgsURL;
     private List<String> extras;
-    private GeoIP geo;
+    private Coordinates geo;
     private List<Room> rooms;
     
     public String getName() {
@@ -45,10 +45,10 @@ public class MainInformationAboutHotel {
         this.allImgsURL = allImgsURL;
     }
     
-    public GeoIP getGeo() {
+    public Coordinates getGeo() {
         return geo;
     }
-    public void setGeo(GeoIP geo) {
+    public void setGeo(Coordinates geo) {
         this.geo = geo;
     }
     public List<Room> getRooms() {

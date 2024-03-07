@@ -18,7 +18,6 @@ C:\Users\Mary\Documents\GitHub\Hotel\HotelReservations\HotelReservations\src\mai
 C:\Users\Mary\Documents\GitHub\Hotel\HotelReservations\HotelReservations\src\main\java\com\example\demo\DTO\HotelDTO.java
 C:\Users\Mary\Documents\GitHub\Hotel\HotelReservations\HotelReservations\src\main\java\com\example\demo\enteies\Hotel.java
 C:\Users\Mary\Documents\GitHub\Hotel\HotelReservations\HotelReservations\src\main\java\com\example\demo\services\ExtrasService.java
-C:\Users\Mary\Documents\GitHub\Hotel\HotelReservations\HotelReservations\src\main\java\com\example\demo\configurations\GeoLocationConfig.java
 C:\Users\Mary\Documents\GitHub\Hotel\HotelReservations\HotelReservations\src\main\java\com\example\demo\reposytories\HotelCommentRepository.java
 C:\Users\Mary\Documents\GitHub\Hotel\HotelReservations\HotelReservations\src\main\java\com\example\demo\reposytories\RoomRepository.java
 C:\Users\Mary\Documents\GitHub\Hotel\HotelReservations\HotelReservations\src\main\java\com\example\demo\services\AuthService.java
@@ -35,7 +34,6 @@ C:\Users\Mary\Documents\GitHub\Hotel\HotelReservations\HotelReservations\src\mai
 C:\Users\Mary\Documents\GitHub\Hotel\HotelReservations\HotelReservations\src\main\java\com\example\demo\DTO\JwtResponse.java
 C:\Users\Mary\Documents\GitHub\Hotel\HotelReservations\HotelReservations\src\main\java\com\example\demo\interceptor\CreateInterceptor.java
 C:\Users\Mary\Documents\GitHub\Hotel\HotelReservations\HotelReservations\src\main\java\com\example\demo\reposytories\RoleRepository.java
-C:\Users\Mary\Documents\GitHub\Hotel\HotelReservations\HotelReservations\src\main\java\com\example\demo\DTO\GeoIP.java
 C:\Users\Mary\Documents\GitHub\Hotel\HotelReservations\HotelReservations\src\main\java\com\example\demo\HotelReservations.java
 C:\Users\Mary\Documents\GitHub\Hotel\HotelReservations\HotelReservations\src\main\java\com\example\demo\enteies\HotelImage.java
 C:\Users\Mary\Documents\GitHub\Hotel\HotelReservations\HotelReservations\src\main\java\com\example\demo\DTO\PartsOfArticle.java
@@ -49,4 +47,5 @@ C:\Users\Mary\Documents\GitHub\Hotel\HotelReservations\HotelReservations\src\mai
 C:\Users\Mary\Documents\GitHub\Hotel\HotelReservations\HotelReservations\src\main\java\com\example\demo\enteies\Role.java
 C:\Users\Mary\Documents\GitHub\Hotel\HotelReservations\HotelReservations\src\main\java\com\example\demo\configurations\WebConfig.java
 C:\Users\Mary\Documents\GitHub\Hotel\HotelReservations\HotelReservations\src\main\java\com\example\demo\configurations\JwtRequestFilter.java
+C:\Users\Mary\Documents\GitHub\Hotel\HotelReservations\HotelReservations\src\main\java\com\example\demo\DTO\Coordinates.java
 C:\Users\Mary\Documents\GitHub\Hotel\HotelReservations\HotelReservations\src\main\java\com\example\demo\controllers\CreateController.java

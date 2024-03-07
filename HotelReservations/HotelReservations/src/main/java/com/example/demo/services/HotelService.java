@@ -19,7 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.demo.DTO.GeoIP;
+import com.example.demo.DTO.Coordinates;
 import com.example.demo.DTO.HotelCard;
 import com.example.demo.DTO.HotelCoordinates;
 import com.example.demo.DTO.HotelDTO;
@@ -34,9 +34,7 @@ import com.example.demo.enteies.Room;
 import com.example.demo.enteies.Users;
 import com.example.demo.reposytories.HotelRepository;
 import com.example.demo.utils.ImageUtil;
-import com.maxmind.geoip2.DatabaseReader;
-import com.maxmind.geoip2.exception.GeoIp2Exception;
-import com.maxmind.geoip2.model.CityResponse;
+
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
@@ -185,7 +183,7 @@ public class HotelService {
     
     
 
-    public List<HotelCard> takeTheNearest(GeoIP geo, HttpServletRequest request) throws IOException, GeoIp2Exception {
+    public List<HotelCard> takeTheNearest(Coordinates geo) throws IOException {
         
         List<HotelCoordinates> coordinates=hotelRepository.findLatitudeAndLongitudeById();
         
@@ -256,7 +254,7 @@ public class HotelService {
                  information.setRooms(rooms);
              }
             List<String> imgsURL = hotelImageService.getAllImagesURL(id);
-            GeoIP geo = new GeoIP();
+            Coordinates geo = new Coordinates();
             geo.setLatitude(hotel.getLatitude());
             geo.setLongitude(hotel.getLongitude());
     
@@ -281,25 +279,32 @@ public class HotelService {
     
 
     public List<HotelCard> takeTheBest() {
-        Iterable <Hotel> hotels=hotelRepository.findAll();
-        Map<Long,Hotel> mapOfHotels=new HashMap<>();
-
-        for( Hotel h: hotels){
-            mapOfHotels.put((h.getTotalRating()/h.getRatingsCount()+h.getTotalRating()%h.getRatingsCount()), h);
+        Iterable<Hotel> hotels = hotelRepository.findAll();
+        Map<Long, Hotel> mapOfHotels = new HashMap<>();
+    
+        for (Hotel h : hotels) {
+            Long totalRating = h.getTotalRating();
+            Long ratingsCount = h.getRatingsCount();
+    
+            // Проверка на ненулевое значение totalRating и ratingsCount
+            if (totalRating != null && ratingsCount != null && ratingsCount != 0) {
+                mapOfHotels.put((totalRating / ratingsCount + totalRating % ratingsCount), h);
+            }
         }
-
-    Map<Long, Hotel> sortedByRating = mapOfHotels.entrySet().stream()
-    .sorted(Map.Entry.comparingByKey(Comparator.reverseOrder())) 
-    .limit(10) 
-    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (oldValue, newValue) -> oldValue, LinkedHashMap::new));
-    List<HotelCard> hotelCard = new ArrayList<>();
-
-    for (Map.Entry<Long, Hotel> entry : sortedByRating.entrySet()) {
-        Hotel hotel = entry.getValue();
-        HotelCard card = convertToHotelCard(hotel);
-        hotelCard.add(card);
-    }
-
+    
+        Map<Long, Hotel> sortedByRating = mapOfHotels.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey(Comparator.reverseOrder()))
+                .limit(10)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+    
+        List<HotelCard> hotelCard = new ArrayList<>();
+    
+        for (Map.Entry<Long, Hotel> entry : sortedByRating.entrySet()) {
+            Hotel hotel = entry.getValue();
+            HotelCard card = convertToHotelCard(hotel);
+            hotelCard.add(card);
+        }
+    
         return hotelCard;
     }
 

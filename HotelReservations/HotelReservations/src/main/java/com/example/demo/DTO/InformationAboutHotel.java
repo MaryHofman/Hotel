@@ -13,7 +13,7 @@ public class InformationAboutHotel {
     private MultipartFile mainImg;
     private List<MultipartFile> allImgs;
     private String[] extras;
-    private GeoIP geo;
+    private Coordinates geo;
     private List<RoomDTO> rooms;
 
     public String getName() {
@@ -53,10 +53,10 @@ public class InformationAboutHotel {
     public void setExtras(String[] extras) {
         this.extras = extras;
     }
-    public GeoIP getGeo() {
+    public Coordinates getGeo() {
         return geo;
     }
-    public void setGeo(GeoIP geo) {
+    public void setGeo(Coordinates geo) {
         this.geo = geo;
     }
     public List<RoomDTO> getRooms() {

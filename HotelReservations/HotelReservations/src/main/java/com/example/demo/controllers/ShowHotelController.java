@@ -7,20 +7,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
-import com.example.demo.DTO.GeoIP;
 import com.example.demo.DTO.HotelCard;
 import com.example.demo.DTO.InformationAboutHotel;
 import com.example.demo.DTO.MainInformationAboutHotel;
+import com.example.demo.DTO.Coordinates;
 import com.example.demo.services.HotelService;
 import com.example.demo.services.UserService;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.servlet.http.HttpServletRequest;
 
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -34,15 +36,20 @@ public class ShowHotelController {
         List<HotelCard> ListArticles = hotelService.GetInformationAboutAllHotels();
         return ResponseEntity.ok(ListArticles) ;
     }
-    //список ближайших отелей
-    @GetMapping("/listHotels/takeTheNearest/{ipAddress}")
-    public ResponseEntity<?> getNearest(@PathVariable GeoIP geo, HttpServletRequest request
-    ) throws IOException, GeoIp2Exception {
-        return ResponseEntity.ok(hotelService.takeTheNearest(geo, request));
+
+    @GetMapping("/listHotels/takeTheNearest")
+    public ResponseEntity<?> getNearest(@RequestParam("latitude") String latitude,
+                                        @RequestParam("longitude") String longitude) throws IOException {
+        Coordinates coordinates=new Coordinates();
+        coordinates.setLatitude(Double.valueOf(latitude));
+        coordinates.setLongitude(Double.valueOf(longitude));
+        return ResponseEntity.ok(hotelService.takeTheNearest(coordinates));
     }
+    
+
     //список лучших отелей
-    @GetMapping("/listHotels/takeTheBest/{ipAddress}")
-    public ResponseEntity<?> getBest() throws IOException, GeoIp2Exception {
+    @GetMapping("/listHotels/takeTheBest")
+    public ResponseEntity<?> getBest() throws IOException {
         return ResponseEntity.ok(hotelService.takeTheBest());
     }
 
