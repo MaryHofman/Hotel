@@ -17,8 +17,8 @@ public class HotelComment {
     @Column(name = "hotel_id")
     private Long hotelId;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @Column(name = "user_name")
+    private String userName;
 
     @Column(name = "comment_text", columnDefinition = "TEXT")
     private String commentText;

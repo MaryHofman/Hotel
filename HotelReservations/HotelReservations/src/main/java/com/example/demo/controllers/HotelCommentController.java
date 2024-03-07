@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.DTO.HotelCommentDTO;
@@ -13,21 +14,19 @@ import com.example.demo.services.HotelCommentService;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/hotelComments")
+@Controller
 public class HotelCommentController {
-
     @Autowired
     private HotelCommentService hotelCommentService;
     //Добавление комментария
-    @PostMapping("/add/{hotelId}")
+    @PostMapping("/addComments/{hotelId}")
     public ResponseEntity<HotelComment> addHotelComment(@PathVariable Long hotelId, @RequestBody HotelCommentDTO hotelComment) {
         hotelComment.setHotelId(hotelId); 
         HotelComment savedComment = hotelCommentService.saveHotelComment(hotelComment);
         return new ResponseEntity<>(savedComment, HttpStatus.CREATED);
     }
     //Список комментариев к отелю
-    @GetMapping("/getHotels/{hotelId}")
+    @GetMapping("/getCommentsHotels/{hotelId}")
     public ResponseEntity<List<HotelComment>> getAllHotelComments(@PathVariable Long hotelId) {
         List<HotelComment> comments = hotelCommentService.getAllHotelComments(hotelId);
         return new ResponseEntity<>(comments, HttpStatus.OK);

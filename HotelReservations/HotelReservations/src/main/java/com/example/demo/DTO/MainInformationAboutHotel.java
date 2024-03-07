@@ -10,7 +10,7 @@ public class MainInformationAboutHotel {
     private String address;
     private String mainImgURL;
     private List<String> allImgsURL;
-    private String[] extras;
+    private List<String> extras;
     private GeoIP geo;
     private List<Room> rooms;
     
@@ -44,12 +44,7 @@ public class MainInformationAboutHotel {
     public void setAllImgsURL(List<String> allImgsURL) {
         this.allImgsURL = allImgsURL;
     }
-    public String[] getExtras() {
-        return extras;
-    }
-    public void setExtras(String[] extras) {
-        this.extras = extras;
-    }
+    
     public GeoIP getGeo() {
         return geo;
     }
@@ -61,6 +56,12 @@ public class MainInformationAboutHotel {
     }
     public void setRooms(List<Room> rooms) {
         this.rooms = rooms;
+    }
+    public List<String> getExtras() {
+        return extras;
+    }
+    public void setExtras(List<String> extras) {
+        this.extras = extras;
     }
 
     

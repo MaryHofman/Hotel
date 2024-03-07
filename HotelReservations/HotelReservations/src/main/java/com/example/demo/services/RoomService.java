@@ -39,11 +39,4 @@ public class RoomService {
         return "Комната с идентификатором " + roomId + " не найдена.";
     }
     }
-
-    
-
-
-
-
-    
 }

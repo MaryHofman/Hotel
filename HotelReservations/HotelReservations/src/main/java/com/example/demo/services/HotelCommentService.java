@@ -8,6 +8,7 @@ import com.example.demo.DTO.NewRaiting;
 import com.example.demo.DTO.reitingDTO;
 import com.example.demo.enteies.Hotel;
 import com.example.demo.enteies.HotelComment;
+import com.example.demo.enteies.Users;
 import com.example.demo.reposytories.HotelCommentRepository;
 import com.example.demo.reposytories.HotelRepository;
 
@@ -20,12 +21,14 @@ public class HotelCommentService {
     private HotelCommentRepository hotelCommentRepository;  
     @Autowired
     private HotelService hotelService;
+    @Autowired
+    private UserService userService;
 
     public HotelComment saveHotelComment(HotelCommentDTO hotelCommentDTO) {
 
         HotelComment hotelComment=new HotelComment();
         hotelComment.setHotelId(hotelCommentDTO.getHotelId());
-        hotelComment.setUserId(hotelCommentDTO.getUserId());
+        hotelComment.setUserName(hotelCommentDTO.getUserName());
         hotelComment.setCommentText(hotelCommentDTO.getCommentText());
         hotelComment.setCreatedAt(hotelCommentDTO.getCreatedAt());
 

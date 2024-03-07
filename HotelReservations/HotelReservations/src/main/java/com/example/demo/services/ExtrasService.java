@@ -8,6 +8,7 @@ import com.example.demo.enteies.Extras;
 import com.example.demo.enteies.Hotel;
 import com.example.demo.reposytories.ExtrasRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,13 +24,14 @@ public class ExtrasService {
         return extrasRepository.findById(id).orElse(null);
     }
 
-    public List<Extras> getAllExtras() {
-        return extrasRepository.findAll();
+    public List<String> getAllByHotelId(Hotel hotelId) {
+        Extras extras = extrasRepository.findByHotelId(hotelId);
+        List<String> allStrings = new ArrayList<>();
+        allStrings.addAll(extras.getStringArray());
+        
+        return allStrings;
     }
-
-    public String[] getAllByHotelId(Hotel hotelId){
-            return extrasRepository.findAllByHotelId(hotelId);
-    }
+    
 
     @Transactional
     public void deleteByHotelId(Hotel hotelId){

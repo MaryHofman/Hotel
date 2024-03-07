@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,14 @@ public class HotelImageService {
             hotelImageRepository.deleteAllImagesByHotelId(hotel_id);}
 
     public List<String> getAllImagesURL(Long hotelId){
-        return hotelImageRepository.findAllImgsUrlByHotelId(hotelId);
+        List<HotelImage> hotelImg=hotelImageRepository.findAllByHotelId(hotelId);
+        if(hotelImg.isEmpty()){
+        List<String> stringHotelImg=new ArrayList<>();
+        for(HotelImage img: hotelImg){
+            stringHotelImg.add(img.getImageUrl());
+        }
+        return stringHotelImg;}
+        return null;
     }
 
     

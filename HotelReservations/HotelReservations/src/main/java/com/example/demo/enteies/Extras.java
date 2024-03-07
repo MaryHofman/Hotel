@@ -1,7 +1,9 @@
 package com.example.demo.enteies;
 
+import java.util.List;
+
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CreationTimestamp;
+
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -32,6 +34,6 @@ public class Extras {
     private Hotel hotelId;
 
     @Column(name = "string_array", columnDefinition = "text[]")
-    private String[] stringArray;
+    private List<String> stringArray;
 
 }

@@ -3,6 +3,7 @@ package com.example.demo.services;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -10,6 +11,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,13 +78,18 @@ public class HotelService {
         hotelCard.setPrice(hotel.getPrice());   
         Long countRating = hotel.getRatingsCount();
         Long totalRating = hotel.getTotalRating();  
-        Double rating = ((double) totalRating / countRating)+(totalRating % countRating);
+    
+        double rating = 0.0;
+        if (countRating != null && totalRating != null && countRating != 0) {
+            rating = ((double) totalRating / countRating);
+        }
+    
         hotelCard.setRating(rating);
         hotelCard.setLatitude(hotel.getLatitude());
         hotelCard.setLongitude(hotel.getLongitude());
         return hotelCard;
     }
-
+    
 
     public ResponseEntity<String> createCard(InformationAboutHotel informationAboutHotel, String jwtToken) throws IOException {
         Hotel hotel = new Hotel();
@@ -91,6 +98,8 @@ public class HotelService {
         hotel.setDescription(informationAboutHotel.getDescription());
         hotel.setLatitude(informationAboutHotel.getGeo().getLatitude());
         hotel.setLongitude(informationAboutHotel.getGeo().getLongitude());
+        hotel.setTotalRating(Long.valueOf(0));
+        hotel.setRatingsCount(Long.valueOf(0));
     
         System.out.println("Token " + jwtToken);
         
@@ -125,7 +134,8 @@ public class HotelService {
             System.out.println("Hello7");
             Extras extras = new Extras();
             extras.setHotelId(hotel);
-            extras.setStringArray(informationAboutHotel.getExtras());
+            List<String> extrasList = Arrays.asList(informationAboutHotel.getExtras());
+            extras.setStringArray(extrasList);
             extrasService.saveExtras(extras);
         }
     
@@ -232,24 +242,43 @@ public class HotelService {
 
     public MainInformationAboutHotel getHotelById(Long id) {
         MainInformationAboutHotel information = new MainInformationAboutHotel();
-        Hotel hotel= hotelRepository.findById(id).get();
-        List<Room> roms=roomService.findAllByHotelId(hotel);
-        String[] extra=extrasService.getAllByHotelId(hotel);
-        List<String> imgsURL=hotelImageService.getAllImagesURL(id);
-        GeoIP geo=new GeoIP();
-        geo.setLatitude(hotel.getLatitude());
-        geo.setLongitude(hotel.getLongitude());
-
-        information.setName(hotel.getName());
-        information.setDescription(hotel.getDescription());
-        information.setAddress(hotel.getAddress());
-        information.setMainImgURL(hotel.getImgUrl());
-        information.setAllImgsURL(imgsURL);
-        information.setRooms(roms);
-        information.setGeo(geo);
-        information.setExtras(extra);
+        Optional<Hotel> optionalHotel = hotelRepository.findById(id);
+        if (optionalHotel.isPresent()) {
+            Hotel hotel = optionalHotel.get();
+            List<Room> rooms = roomService.findAllByHotelId(hotel);
+                
+       
+             System.out.println("Room  "+rooms.isEmpty());
+             System.out.println("Room  "+(rooms != null));
+    
+            // // Проверка на null перед установкой комнат
+             if (rooms != null && !rooms.isEmpty()) {
+                 information.setRooms(rooms);
+             }
+            List<String> imgsURL = hotelImageService.getAllImagesURL(id);
+            GeoIP geo = new GeoIP();
+            geo.setLatitude(hotel.getLatitude());
+            geo.setLongitude(hotel.getLongitude());
+    
+           // information.setRooms(null);
+            information.setName(hotel.getName());
+            information.setDescription(hotel.getDescription());
+            information.setAddress(hotel.getAddress());
+            information.setMainImgURL(hotel.getImgUrl());
+            information.setAllImgsURL(imgsURL);
+            information.setGeo(geo);
+            
+            List<String> extras = extrasService.getAllByHotelId(hotel);
+            // Проверка на null перед установкой дополнительных услуг
+            if (extras != null && !extras.isEmpty()) {
+                information.setExtras(extras);
+            } else {
+                information.setExtras(new ArrayList<>());
+            }
+        }
         return information;
     }
+    
 
     public List<HotelCard> takeTheBest() {
         Iterable <Hotel> hotels=hotelRepository.findAll();

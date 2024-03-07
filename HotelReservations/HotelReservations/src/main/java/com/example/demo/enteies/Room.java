@@ -2,6 +2,8 @@ package com.example.demo.enteies;
 
 import org.hibernate.annotations.Cascade;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,6 +20,7 @@ public class Room {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "hotel_id", referencedColumnName = "hotel_id")
     @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
+    @JsonIgnore
     private Hotel hotelId;
 
     @Column(name = "room_type", nullable = false, length = 50)
@@ -28,5 +31,14 @@ public class Room {
 
     @Column(name = "description")
     private String description;
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "id=" + id +
+                ", roomType='" + roomType + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }
 

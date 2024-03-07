@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -56,8 +58,18 @@ public class Hotel {
     private String description;
 
     @OneToMany(mappedBy = "hotelId", cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private List<Room> rooms;
 
     @OneToMany(mappedBy = "hotelId", cascade = CascadeType.REMOVE)
     private List<Extras> extras;
+
+    @Override
+    public String toString() {
+        return "Hotel{" +
+                "hotelId=" + hotelId +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                '}';
+    }
 }
