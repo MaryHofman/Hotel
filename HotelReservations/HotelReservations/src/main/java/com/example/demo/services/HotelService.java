@@ -259,6 +259,7 @@ public class HotelService {
             geo.setLongitude(hotel.getLongitude());
     
            // information.setRooms(null);
+            information.setId(hotel.getHotelId());
             information.setName(hotel.getName());
             information.setDescription(hotel.getDescription());
             information.setAddress(hotel.getAddress());
@@ -306,6 +307,17 @@ public class HotelService {
         }
     
         return hotelCard;
+    }
+
+    public List<HotelCard> getHotelByUserId(Long id) {
+        List<Hotel> hotels = hotelRepository.findHotelsByUserId(id);
+        List<HotelCard> hotelsCard = new ArrayList<>();
+
+        for (int i = 0; i < hotels.size(); i++) {
+            hotelsCard.add(convertToHotelCard(hotels.get(i)));
+        }
+       
+        return hotelsCard;
     }
 
     

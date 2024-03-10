@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.demo.enteies.Room;
 
 public class InformationAboutHotel {
+    private Long id;
     private String name;
     private String description;
     private String address;
@@ -64,6 +65,12 @@ public class InformationAboutHotel {
     }
     public void setRooms(List<RoomDTO> rooms) {
         this.rooms = rooms;
+    }
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
     }
 
     

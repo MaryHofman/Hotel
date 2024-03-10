@@ -5,6 +5,7 @@ import java.util.List;
 import com.example.demo.enteies.Room;
 
 public class MainInformationAboutHotel {
+    private Long id;
     private String name;
     private String description;
     private String address;
@@ -62,6 +63,12 @@ public class MainInformationAboutHotel {
     }
     public void setExtras(List<String> extras) {
         this.extras = extras;
+    }
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
     }
 
     

@@ -64,6 +64,10 @@ public ResponseEntity<MainInformationAboutHotel> getHotelById(@PathVariable Long
     }
 }
 
-    
+@GetMapping("/listHotels/User/{userId}")
+public ResponseEntity<List<HotelCard>> getHotelByUserId(@PathVariable Long userId) {
+    return ResponseEntity.ok(hotelService.getHotelByUserId(userId));
+}
+
 
 }

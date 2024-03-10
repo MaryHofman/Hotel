@@ -29,5 +29,8 @@ public interface HotelRepository extends CrudRepository<Hotel, Long> {
     @Transactional
     @Override
     void deleteById(Long id);
+
+    @Query("SELECT h FROM Hotel h WHERE h.userId = :userId")
+    List<Hotel> findHotelsByUserId(@Param("userId") Long userId);
 }
 
