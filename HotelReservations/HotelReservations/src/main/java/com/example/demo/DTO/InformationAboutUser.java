@@ -1,5 +1,9 @@
 package com.example.demo.DTO;
 
+import java.util.Collection;
+
+import com.example.demo.enteies.Role;
+
 public class InformationAboutUser{
     private Long id;
     private String firstName;
@@ -8,16 +12,22 @@ public class InformationAboutUser{
     private String urlImg;
     private String tokenAccess;
     private String tokenRefresh;
+    private Collection<Role> roles;
 
-    public InformationAboutUser(Long id, String firstName, String secondName, String email, String tokenAccess,
-            String tokenRefresh) {
+  
+    
+    public InformationAboutUser(Long id, String firstName, String secondName, String email, 
+            String tokenAccess, String tokenRefresh, Collection<Role> roles) {
         this.id = id;
         this.firstName = firstName;
         this.SecondName = secondName;
         this.email = email;
         this.tokenAccess = tokenAccess;
         this.tokenRefresh = tokenRefresh;
+        this.roles = roles;
     }
+
+   
 
     public String getUrlImg() {
         return urlImg;
@@ -73,6 +83,14 @@ public class InformationAboutUser{
 
     public void setTokenRefresh(String tokenRefresh) {
         this.tokenRefresh = tokenRefresh;
+    }
+
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
     }
 
     

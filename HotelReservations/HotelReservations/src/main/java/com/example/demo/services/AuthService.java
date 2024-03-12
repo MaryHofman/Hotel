@@ -111,7 +111,7 @@ public class AuthService {
 
 
     private InformationAboutUser getInformationAboutUser(Users user, String tokenAccess, String tokenRefresh ){
-        InformationAboutUser information=new InformationAboutUser(user.getId(), user.getFirstName(),user.getSecondName(),user.getEmail(),tokenAccess,tokenRefresh);
+        InformationAboutUser information=new InformationAboutUser(user.getId(), user.getFirstName(),user.getSecondName(),user.getEmail(),tokenAccess,tokenRefresh, user.getRoles());
         if(user.getImgURL()!=null){
             information.setUrlImg(user.getImgURL());
         }
