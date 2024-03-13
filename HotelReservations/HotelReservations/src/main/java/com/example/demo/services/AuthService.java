@@ -1,7 +1,9 @@
 package com.example.demo.services;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,7 +113,9 @@ public class AuthService {
 
 
     private InformationAboutUser getInformationAboutUser(Users user, String tokenAccess, String tokenRefresh ){
-        InformationAboutUser information=new InformationAboutUser(user.getId(), user.getFirstName(),user.getSecondName(),user.getEmail(),tokenAccess,tokenRefresh, user.getRoles());
+        List<Role> roleList = new ArrayList<>(user.getRoles());
+        String role = roleList.get(0).getName();
+        InformationAboutUser information=new InformationAboutUser(user.getId(), user.getFirstName(),user.getSecondName(),user.getEmail(),tokenAccess,tokenRefresh, role);
         if(user.getImgURL()!=null){
             information.setUrlImg(user.getImgURL());
         }
@@ -132,7 +136,9 @@ public class AuthService {
         }
 
         Users newUser=userService.saveUpdateUser(user);
-        InformationAboutUser information=new InformationAboutUser(newUser.getId(), newUser.getFirstName(), newUser.getSecondName(), newUser.getEmail(), userProfile.getTokenAccess(),userProfile.getTokenRefresh());
+        List<Role> roleList = new ArrayList<>(newUser.getRoles());
+        String role = roleList.get(0).getName();
+        InformationAboutUser information=new InformationAboutUser(newUser.getId(), newUser.getFirstName(), newUser.getSecondName(), newUser.getEmail(), userProfile.getTokenAccess(),userProfile.getTokenRefresh(), role);
         information.setUrlImg(userProfile.getUrlImg());
         return  ResponseEntity.ok(information);
     }
@@ -140,7 +146,7 @@ public class AuthService {
     public ResponseEntity<?> changePhoto(MultipartFile profilePhoto, String accessToken) throws IOException {
         Claims information = jwtProvider.getAccessClaims(accessToken);
         Users user=userService.findByUsername(information.get("email").toString()).get();
-        String path="/img/ProfileIMG";
+        String path="img/ProfileIMG";
         if(user.getImgURL().equals(null)){   
             String fileName = imageUtil.saveImage(profilePhoto, path);
             return ResponseEntity.ok(userService.saveUpdateUser(user));

@@ -67,7 +67,7 @@ public class HotelService {
         return hotels.stream().map(this::convertToHotelCard).collect(Collectors.toList());
     }
 
-    private HotelCard convertToHotelCard(Hotel hotel) {
+    public HotelCard convertToHotelCard(Hotel hotel) {
         HotelCard hotelCard = new HotelCard();
         hotelCard.setId(hotel.getHotelId());
         hotelCard.setName(hotel.getName());

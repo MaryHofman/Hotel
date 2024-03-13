@@ -23,7 +23,8 @@ public class CreateInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = request.getHeader("Authorization");
-        if (token != null) {
+        System.out.println("Valid token "+(jwtProvider.validateAccessToken(token)));
+        if (token != null && jwtProvider.validateAccessToken(token)) {
             try {
                 Claims claims = jwtProvider.getAccessClaims(token);
                 List<Map<String, Object>> roles = (List<Map<String, Object>>) claims.get("roles");

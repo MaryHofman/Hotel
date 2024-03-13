@@ -29,7 +29,7 @@ public class HotelImageService {
     public void deleteImg(Long hotel_id) throws IOException {
             List<HotelImage> list_of_images=hotelImageRepository.findAllImagesByHotelId(hotel_id);
             for (HotelImage hotelImage : list_of_images) {
-                imageUtil.deleteImage("/img/hotelIMG", hotelImage.getImageUrl());}
+                imageUtil.deleteImage("img/hotelIMG", hotelImage.getImageUrl());}
             hotelImageRepository.deleteAllImagesByHotelId(hotel_id);}
 
     public List<String> getAllImagesURL(Long hotelId){

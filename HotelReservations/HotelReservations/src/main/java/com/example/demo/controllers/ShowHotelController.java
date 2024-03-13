@@ -10,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import com.example.demo.DTO.HotelCard;
 import com.example.demo.DTO.InformationAboutHotel;
 import com.example.demo.DTO.MainInformationAboutHotel;
+import com.example.demo.DTO.requestFavouriteDTO;
 import com.example.demo.DTO.Coordinates;
+import com.example.demo.services.FavouriteService;
 import com.example.demo.services.HotelService;
 import com.example.demo.services.UserService;
 import com.maxmind.geoip2.DatabaseReader;
@@ -19,10 +21,11 @@ import com.maxmind.geoip2.exception.GeoIp2Exception;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.servlet.http.HttpServletRequest;
 
-
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -30,6 +33,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ShowHotelController {
     @Autowired
     private HotelService hotelService;
+
+    @Autowired
+    private FavouriteService favouriteService;
     //список всех отелей
     @GetMapping("/listHotels")
     public ResponseEntity<List<HotelCard>> getMethodName() {
@@ -65,9 +71,27 @@ public ResponseEntity<MainInformationAboutHotel> getHotelById(@PathVariable Long
 }
 
 @GetMapping("/listHotels/User/{userId}")
-public ResponseEntity<List<HotelCard>> getHotelByUserId(@PathVariable Long userId) {
+public ResponseEntity<List<HotelCard>> getHotelByUserId(@PathVariable Long userId, @RequestHeader("Authorization") String jwtToken) {
     return ResponseEntity.ok(hotelService.getHotelByUserId(userId));
 }
+
+@PostMapping("/listHotels/addFavourite")
+public ResponseEntity<?> addFavourite(@RequestHeader("Authorization") String jwtToken, @RequestParam("hotelId") Long hotelId){
+    return favouriteService.addFavourite(jwtToken, hotelId);
+}
+
+@DeleteMapping("/listHotels/deleteFavourite/{hotelId}")
+public ResponseEntity<?> deleteFavourite(@RequestHeader("Authorization") String jwtToken, @PathVariable Long hotelId){
+    return favouriteService.deleteFavourite(jwtToken, hotelId);
+}
+
+@GetMapping("/listHotels/Favourite/{userId}")
+public ResponseEntity<?> getListFavourite(@RequestHeader("Authorization") String jwtToken, @PathVariable Long userId){
+    return favouriteService.getListFavourite(jwtToken);
+}
+
+
+
 
 
 }

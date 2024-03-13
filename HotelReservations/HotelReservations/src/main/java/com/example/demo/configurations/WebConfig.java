@@ -20,8 +20,8 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-       // registry.addInterceptor(createInterceptor).addPathPatterns("/create");
-        //registry.addInterceptor(authInterceptor).addPathPatterns("/profile");
+       registry.addInterceptor(createInterceptor).addPathPatterns("/create","/delete","/listHotels/User/{userId}","/addComments/{hotelId}");
+       registry.addInterceptor(authInterceptor).addPathPatterns("/profile","/calculateRating", "/deleteComments/{id}","/listHotels/addFavourite");
 
     }
 

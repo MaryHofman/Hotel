@@ -24,7 +24,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         
         String token = request.getHeader("Authorization");
 
-        if (token != null) {
+        if (token != null && jwtProvider.validateAccessToken(token)) {
                 Claims claims = jwtProvider.getAccessClaims(token);
                 return jwtProvider.validateAccessToken(token);
                

@@ -12,19 +12,19 @@ public class InformationAboutUser{
     private String urlImg;
     private String tokenAccess;
     private String tokenRefresh;
-    private Collection<Role> roles;
+    private String role;
 
   
     
     public InformationAboutUser(Long id, String firstName, String secondName, String email, 
-            String tokenAccess, String tokenRefresh, Collection<Role> roles) {
+            String tokenAccess, String tokenRefresh, String role) {
         this.id = id;
         this.firstName = firstName;
         this.SecondName = secondName;
         this.email = email;
         this.tokenAccess = tokenAccess;
         this.tokenRefresh = tokenRefresh;
-        this.roles = roles;
+        this.role = role;
     }
 
    
@@ -85,12 +85,12 @@ public class InformationAboutUser{
         this.tokenRefresh = tokenRefresh;
     }
 
-    public Collection<Role> getRoles() {
-        return roles;
+    public String getRoles() {
+        return role;
     }
 
-    public void setRoles(Collection<Role> roles) {
-        this.roles = roles;
+    public void setRoles(String roles) {
+        this.role = roles;
     }
 
     
