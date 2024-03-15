@@ -107,22 +107,19 @@ public class HotelService {
         hotel.setUserId(user.getId());
         String mainPath = "/img/hotelIMG";
         // Сохранение основного изображения, если оно не null
-        if (informationAboutHotel.getMainImg() != null) {
-            String mainURL = imageUtil.saveImage(informationAboutHotel.getMainImg(), mainPath);
+        if (informationAboutHotel.getMainImg()!= null) {
+
+            String mainURL = imageUtil.saveMainImage(informationAboutHotel.getMainImg());
             hotel.setImgUrl(mainURL);
         }
         hotelRepository.save(hotel);
-        System.out.println("Hello3");
         Long hotelId = hotel.getHotelId();
-        System.out.println("Hello4");
     
         // Сохранение дополнительных изображений, если они не null
         
         if (informationAboutHotel.getAllImgs() != null) {
-            System.out.println("Hello5");
-            for (MultipartFile file : informationAboutHotel.getAllImgs()) {
-                System.out.println("Hello6");
-                String url = imageUtil.saveImage(file, mainPath);
+            for (String file : informationAboutHotel.getAllImgs()) {
+                String url = imageUtil.saveAllImage(file);
                 hotelImageService.saveImg(hotelId, url);
             }
         }
@@ -245,9 +242,6 @@ public class HotelService {
             Hotel hotel = optionalHotel.get();
             List<Room> rooms = roomService.findAllByHotelId(hotel);
                 
-       
-             System.out.println("Room  "+rooms.isEmpty());
-             System.out.println("Room  "+(rooms != null));
     
             // // Проверка на null перед установкой комнат
              if (rooms != null && !rooms.isEmpty()) {
@@ -274,6 +268,14 @@ public class HotelService {
             } else {
                 information.setExtras(new ArrayList<>());
             }
+
+            List<String> AllUrl=hotelImageService.getAllImagesURL(id);
+            System.out.println("Строки");
+            if( AllUrl!=null){
+            for(String s: AllUrl){
+                System.out.println(s);
+            }}
+            information.setAllImgsURL(AllUrl);
         }
         return information;
     }

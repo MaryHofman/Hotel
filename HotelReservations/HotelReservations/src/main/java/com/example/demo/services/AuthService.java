@@ -143,17 +143,19 @@ public class AuthService {
         return  ResponseEntity.ok(information);
     }
 
-    public ResponseEntity<?> changePhoto(MultipartFile profilePhoto, String accessToken) throws IOException {
+    public ResponseEntity<?> changePhoto(String profilePhoto, String accessToken) throws IOException {
         Claims information = jwtProvider.getAccessClaims(accessToken);
         Users user=userService.findByUsername(information.get("email").toString()).get();
         String path="img/ProfileIMG";
         if(user.getImgURL().equals(null)){   
-            String fileName = imageUtil.saveImage(profilePhoto, path);
+            String fileName = imageUtil.saveUserImage(profilePhoto);
+            user.setImgURL(fileName);
             return ResponseEntity.ok(userService.saveUpdateUser(user));
         }
         else{
             imageUtil.deleteImage(user.getImgURL(),path);
-            String fileName = imageUtil.saveImage(profilePhoto,path);
+            String fileName = imageUtil.saveUserImage(profilePhoto);
+            user.setImgURL(fileName);
             return ResponseEntity.ok(userService.saveUpdateUser(user));
         }
        

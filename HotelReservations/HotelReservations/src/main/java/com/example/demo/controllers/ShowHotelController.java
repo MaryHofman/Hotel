@@ -36,7 +36,7 @@ public class ShowHotelController {
 
     @Autowired
     private FavouriteService favouriteService;
-    //список всех отелей
+   
     @GetMapping("/listHotels")
     public ResponseEntity<List<HotelCard>> getMethodName() {
         List<HotelCard> ListArticles = hotelService.GetInformationAboutAllHotels();
@@ -63,6 +63,7 @@ public class ShowHotelController {
     @GetMapping("/listHotels/{id}")
 public ResponseEntity<MainInformationAboutHotel> getHotelById(@PathVariable Long id) {
     MainInformationAboutHotel hotel = hotelService.getHotelById(id);
+    
     if (hotel != null) {
         return ResponseEntity.ok(hotel);
     } else {

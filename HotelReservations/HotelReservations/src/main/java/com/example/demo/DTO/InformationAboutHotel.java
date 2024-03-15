@@ -11,8 +11,20 @@ public class InformationAboutHotel {
     private String name;
     private String description;
     private String address;
-    private MultipartFile mainImg;
-    private List<MultipartFile> allImgs;
+    private List<String> allImgs;
+    public List<String> getAllImgs() {
+        return allImgs;
+    }
+    public void setAllImgs(List<String> allImgs) {
+        this.allImgs = allImgs;
+    }
+    private String mainImg;
+    public String getMainImg() {
+        return mainImg;
+    }
+    public void setMainImg(String mainImg) {
+        this.mainImg = mainImg;
+    }
     private String[] extras;
     private Coordinates geo;
     private List<RoomDTO> rooms;
@@ -29,19 +41,7 @@ public class InformationAboutHotel {
     public void setDescription(String description) {
         this.description = description;
     }
-    public MultipartFile getMainImg() {
-        return mainImg;
-    }
-    public void setMainImg(MultipartFile mainImg) {
-        this.mainImg = mainImg;
-    }
-    
-    public List<MultipartFile> getAllImgs() {
-        return allImgs;
-    }
-    public void setAllImgs(List<MultipartFile> allImgs) {
-        this.allImgs = allImgs;
-    }
+  
     public String getAddress() {
         return address;
     }

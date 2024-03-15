@@ -7,9 +7,9 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.enteies.HotelImage;
 
     @Repository
-    public interface HotelImageRepository extends CrudRepository<HotelImage, Long>{
-        public List<HotelImage> findAllImagesByHotelId(Long hotelId);
+    public interface HotelImageRepository extends CrudRepository<HotelImage, Long>{ 
         public void deleteAllImagesByHotelId(Long hotelId);
-        public List<HotelImage> findAllByHotelId(Long hotelId);
+        List<HotelImage> findByHotelId(Long hotelId);
+        
     }
 
