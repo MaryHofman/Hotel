@@ -34,7 +34,6 @@ public class HotelImageService {
 
 
     public List<String> getAllImagesURL(Long hotelId){
-        System.out.println("HptelId "+hotelId);
 
         List<HotelImage> hotelImg=hotelImageRepository.findByHotelId(hotelId);
 

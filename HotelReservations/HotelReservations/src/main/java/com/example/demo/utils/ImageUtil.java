@@ -46,7 +46,7 @@ public class ImageUtil {
         byte[] imageBytes = Base64.getDecoder().decode(base64ImageString);
         String uniqueFileName = UUID.randomUUID().toString() + ".jpg";
         MultipartFile file = new MockMultipartFile(uniqueFileName, imageBytes);
-        String uploadPath ="src/img/mainIMG/";
+        String uploadPath ="img/mainIMG/";
         Path path = Paths.get(uploadPath);
         try {
             Files.createDirectories(path);
@@ -74,7 +74,7 @@ public class ImageUtil {
         byte[] imageBytes = Base64.getDecoder().decode(base64ImageString);
         String uniqueFileName = UUID.randomUUID().toString() + ".jpg";
         MultipartFile file = new MockMultipartFile(uniqueFileName, imageBytes);
-        String uploadPath ="src/img/hotelIMG/";
+        String uploadPath ="img/hotelIMG/";
         Path path = Paths.get(uploadPath);
         try {
             Files.createDirectories(path);
@@ -100,7 +100,7 @@ public class ImageUtil {
         byte[] imageBytes = Base64.getDecoder().decode(base64ImageString);
         String uniqueFileName = UUID.randomUUID().toString() + ".jpg";
         MultipartFile file = new MockMultipartFile(uniqueFileName, imageBytes);
-        String uploadPath ="src/img/users/";
+        String uploadPath ="img/users/";
         Path path = Paths.get(uploadPath);
         try {
             Files.createDirectories(path);

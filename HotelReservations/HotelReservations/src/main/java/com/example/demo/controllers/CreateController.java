@@ -40,32 +40,6 @@ public class CreateController {
     
     @PostMapping("/create")
     public ResponseEntity<?> createHotel(@RequestBody InformationAboutHotel informationAboutHotel, @RequestHeader("Authorization") String jwtToken) throws IOException {
-        String base64ImageString = informationAboutHotel.getMainImg().split(",")[1];
-        byte[] imageBytes = Base64.getDecoder().decode(base64ImageString);
-        MultipartFile file = new MockMultipartFile("image.jpg", imageBytes);
-        String uploadPath ="src/img/hotelIMG/";
-    
-        Path path = Paths.get(uploadPath);
-        try {
-            Files.createDirectories(path);
-            System.out.println("Папка создана или уже существует: " + path);
-        } catch (IOException e) {
-            System.err.println("Не удалось создать папку: " + e.getMessage());
-        }
-        
-        // Определите полный путь к файлу на диске
-        String filePath = uploadPath + "image.jpg";
-        System.out.println(filePath);
-        
-        // Создайте файл на диске и запишите в него данные из MultipartFile
-        try {
-            Files.write(Paths.get(filePath), file.getBytes());
-            System.out.println("Файл успешно записан на диск: " + filePath);
-            
-        } catch (IOException e) {
-            System.err.println("Не удалось записать файл на диск: " + e.getMessage());
-        }
-        
         return hotelService.createCard(informationAboutHotel, jwtToken);
     }
     

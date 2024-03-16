@@ -44,7 +44,7 @@ public class AuthController {
     }
     // изменение фотографии пользователя
     @PutMapping("/changePhoto")
-    public ResponseEntity<?> changePhoto(@RequestBody MultipartFile  profilePhoto,   @RequestHeader(name = "Authorization") String accessToken) throws IOException {
+    public ResponseEntity<?> changePhoto(@RequestBody String  profilePhoto,   @RequestHeader(name = "Authorization") String accessToken) throws IOException {
         return authService.changePhoto(profilePhoto,accessToken);
     }
     //проверка access токена
