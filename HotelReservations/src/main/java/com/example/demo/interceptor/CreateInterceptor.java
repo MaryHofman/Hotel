@@ -15,6 +15,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import com.example.demo.exeptions.ExeptionJWT;
 
 @Component
 public class CreateInterceptor implements HandlerInterceptor {
@@ -23,7 +24,8 @@ public class CreateInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = request.getHeader("Authorization");
-        System.out.println("Valid token "+(jwtProvider.validateAccessToken(token)));
+        int validJWT=jwtProvider.validateAccessToken(token);
+        
         if (token != null && jwtProvider.validateAccessToken(token)==0) {
             try {
                 Claims claims = jwtProvider.getAccessClaims(token);
@@ -37,7 +39,7 @@ public class CreateInterceptor implements HandlerInterceptor {
 
                 System.out.println(roleNames);
                 
-                if(roleNames.contains("AUTHOR")){
+                if(roleNames.contains("AUTHOR") || roleNames.contains("ADMIN")){
                 String firstName = (String) claims.get("firstName");
                 request.setAttribute("username", firstName);
                 return true;}
@@ -52,8 +54,21 @@ public class CreateInterceptor implements HandlerInterceptor {
                 return false;
             }
         } else {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token missing");
-            return false;
+            if(validJWT==1){
+                response.sendError(1, "Unsupported jwt");
+                throw new ExeptionJWT("Unsupported jwt");
+            }
+            else if(validJWT==2){
+                response.sendError(2, "Malformed jwt");
+                throw new ExeptionJWT("Malformed jwt");
+            }
+            else if(validJWT==3){
+                response.sendError(3, "invalid token");
+                throw new ExeptionJWT("invalid token");
+            }
+            else{response.sendError(4, "null token");
+            throw new ExeptionJWT("null  token");}
+          
         }
     }
 }
