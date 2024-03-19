@@ -38,7 +38,28 @@ public class ImageController {
     public ResponseEntity<Resource> getHotelImage(@PathVariable String imageName) {
         try {
            
-            String imagePath = "img/mainIMG/"+imageName;
+            String imagePath = "img/hotelIMG/"+imageName;
+            String fullPath = Paths.get(imagePath).toString();
+            Resource resource = new FileSystemResource(fullPath);
+            
+            if (resource.exists()) {
+                return ResponseEntity.ok()
+                        .contentType(MediaType.IMAGE_JPEG)
+                        .body(resource);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/img/users/{imageName}")
+    public ResponseEntity<Resource> getUserImage(@PathVariable String imageName) {
+        try {
+           
+            String imagePath = "img/users/"+imageName;
             String fullPath = Paths.get(imagePath).toString();
             Resource resource = new FileSystemResource(fullPath);
             
