@@ -11,6 +11,7 @@ import com.example.demo.enteies.HotelImage;
 import com.example.demo.reposytories.HotelImageRepository;
 import com.example.demo.reposytories.HotelRepository;
 import com.example.demo.utils.ImageUtil;
+import jakarta.transaction.Transactional;
 
 @Service
 public class HotelImageService {
@@ -26,6 +27,7 @@ public class HotelImageService {
         hotelImage.setImageUrl(url);
         HotelImage s=hotelImageRepository.save(hotelImage);}
 
+        @Transactional
     public void deleteImg(Long hotel_id) throws IOException {
             List<HotelImage> list_of_images=hotelImageRepository.findByHotelId(hotel_id);
             for (HotelImage hotelImage : list_of_images) {

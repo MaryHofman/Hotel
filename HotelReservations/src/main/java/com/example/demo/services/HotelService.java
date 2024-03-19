@@ -214,6 +214,7 @@ public class HotelService {
         return result;
     }
 
+    @Transactional
     public ResponseEntity<?> deleteInformationAboutHotel(Long id_hotel, String jwtToken) throws IOException {
         hotelImageService.deleteImg(id_hotel);
         Hotel hotel=hotelRepository.findById(id_hotel).get();
