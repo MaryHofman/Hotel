@@ -98,6 +98,7 @@ public class HotelService {
         hotel.setLongitude(informationAboutHotel.getGeo().getLongitude());
         hotel.setTotalRating(Long.valueOf(0));
         hotel.setRatingsCount(Long.valueOf(0));
+        hotel.setPrice(informationAboutHotel.getRooms().get(0).getPrice());
     
         System.out.println("Token " + jwtToken);
         
