@@ -2,6 +2,7 @@ package com.example.demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.time.LocalDateTime;
 
 import com.example.demo.DTO.HotelCommentDTO;
 import com.example.demo.DTO.NewRaiting;
@@ -31,7 +32,7 @@ public class HotelCommentService {
         hotelComment.setUserName(hotelCommentDTO.getUserName());
         hotelComment.setCommentText(hotelCommentDTO.getCommentText());
         hotelComment.setRaiting(hotelCommentDTO.getRaiting());
-        hotelComment.setCreatedAt(hotelCommentDTO.getCreatedAt());
+        hotelComment.setCreatedAt(LocalDateTime.now());
 
         reitingDTO raiting=new reitingDTO();
         raiting.setHotelId(hotelCommentDTO.getHotelId());
