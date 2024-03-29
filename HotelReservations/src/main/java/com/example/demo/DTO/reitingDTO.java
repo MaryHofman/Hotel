@@ -7,6 +7,12 @@ public class reitingDTO {
     private Long hotelId;
     private String userName;
     private int raiting;
+
+    
+    
+    public reitingDTO() {
+    }
+
     
     public Long getHotelId() {
         return hotelId;

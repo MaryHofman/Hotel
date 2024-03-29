@@ -7,6 +7,7 @@ public class HotelCommentDTO{
     private String userName;
     private String commentText;
     private LocalDateTime createdAt;
+    private int raiting;
     
     public Long getHotelId() {
         return hotelId;
@@ -33,6 +34,12 @@ public class HotelCommentDTO{
     }
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+    public int getRaiting() {
+        return raiting;
+    }
+    public void setRaiting(int raiting) {
+        this.raiting = raiting;
     }
 
     

@@ -30,7 +30,13 @@ public class HotelCommentService {
         hotelComment.setHotelId(hotelCommentDTO.getHotelId());
         hotelComment.setUserName(hotelCommentDTO.getUserName());
         hotelComment.setCommentText(hotelCommentDTO.getCommentText());
+        hotelComment.setRaiting(hotelCommentDTO.getRaiting());
         hotelComment.setCreatedAt(hotelCommentDTO.getCreatedAt());
+
+        reitingDTO raiting=new reitingDTO();
+        raiting.setHotelId(hotelCommentDTO.getHotelId());
+        raiting.setRaiting(hotelCommentDTO.getRaiting());
+        calculateHotelRating(raiting);
 
         return hotelCommentRepository.save(hotelComment);
     }

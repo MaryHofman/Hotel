@@ -20,6 +20,9 @@ public class HotelComment {
     @Column(name = "user_name")
     private String userName;
 
+    @Column(name = "raiting")
+    private int raiting;
+
     @Column(name = "comment_text", columnDefinition = "TEXT")
     private String commentText;
 
