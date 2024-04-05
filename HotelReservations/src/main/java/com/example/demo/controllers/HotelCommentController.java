@@ -22,7 +22,7 @@ public class HotelCommentController {
     @PostMapping("/addComments/{hotelId}")
     public ResponseEntity<HotelComment> addHotelComment(@PathVariable Long hotelId, @RequestBody HotelCommentDTO hotelComment, @RequestHeader("Authorization") String jwtToken) {
         hotelComment.setHotelId(hotelId); 
-        HotelComment savedComment = hotelCommentService.saveHotelComment(hotelComment);
+        HotelComment savedComment = hotelCommentService.saveHotelComment(hotelComment, jwtToken);
         return new ResponseEntity<>(savedComment, HttpStatus.CREATED);
     }
     //Список комментариев к отелю

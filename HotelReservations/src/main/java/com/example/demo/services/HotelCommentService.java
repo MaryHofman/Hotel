@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import com.example.demo.DTO.HotelCommentDTO;
 import com.example.demo.DTO.NewRaiting;
 import com.example.demo.DTO.reitingDTO;
+import com.example.demo.configurations.JWTprovider;
 import com.example.demo.enteies.Hotel;
 import com.example.demo.enteies.HotelComment;
 import com.example.demo.enteies.Users;
@@ -24,8 +25,12 @@ public class HotelCommentService {
     private HotelService hotelService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private JWTprovider jwTprovider;
 
-    public HotelComment saveHotelComment(HotelCommentDTO hotelCommentDTO) {
+    public HotelComment saveHotelComment(HotelCommentDTO hotelCommentDTO, String jwt) {
+        String email = jwTprovider.getAccessClaims(jwt).get("email").toString();
+        Users user=userService.findByUsername(email).get();
 
         HotelComment hotelComment=new HotelComment();
         hotelComment.setHotelId(hotelCommentDTO.getHotelId());
@@ -33,6 +38,7 @@ public class HotelCommentService {
         hotelComment.setCommentText(hotelCommentDTO.getCommentText());
         hotelComment.setRaiting(hotelCommentDTO.getRaiting());
         hotelComment.setCreatedAt(LocalDateTime.now());
+        hotelComment.setUserId(user.getId());
 
         reitingDTO raiting=new reitingDTO();
         raiting.setHotelId(hotelCommentDTO.getHotelId());
