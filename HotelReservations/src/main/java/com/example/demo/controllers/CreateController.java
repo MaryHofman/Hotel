@@ -20,12 +20,13 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
+import java.util.*;
+import com.example.demo.DTO.HotelCard;
 import com.example.demo.DTO.HotelDTO;
 import com.example.demo.DTO.IdWrapper;
 import com.example.demo.DTO.InformationAboutHotel;
@@ -42,6 +43,12 @@ public class CreateController {
     @PostMapping("/create")
     public ResponseEntity<?> createHotel(@RequestBody InformationAboutHotel informationAboutHotel, @RequestHeader("Authorization") String jwtToken) throws IOException {
         return hotelService.createCard(informationAboutHotel, jwtToken);
+    }
+
+    @GetMapping("/getHotelsOfUser")
+    public ResponseEntity<List<HotelCard>> getListHotelsOfUser(@RequestHeader("Authorization") String jwtToken) {
+        List<HotelCard> hotels = hotelService.listHotelsOfUser(jwtToken);
+        return ResponseEntity.ok().body(hotels);
     }
     
 

@@ -20,7 +20,7 @@ public class HotelComment {
     @Column(name = "user_name")
     private String userName;
 
-     @Column(name = "userid")
+    @Column(name = "userid")
     private Long userId;
 
     @Column(name = "raiting")

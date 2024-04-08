@@ -289,8 +289,6 @@ public class HotelService {
         for (Hotel h : hotels) {
             Long totalRating = h.getTotalRating();
             Long ratingsCount = h.getRatingsCount();
-    
-            // Проверка на ненулевое значение totalRating и ratingsCount
             if (totalRating != null && ratingsCount != null && ratingsCount != 0) {
                 mapOfHotels.put((totalRating / ratingsCount + totalRating % ratingsCount), h);
             }
@@ -320,8 +318,20 @@ public class HotelService {
             hotelsCard.add(convertToHotelCard(hotels.get(i)));
         }
        
+
         return hotelsCard;
     }
 
+
+    public List<HotelCard> listHotelsOfUser(String token) {
+        String email = jwTprovider.getAccessClaims(token).get("email").toString();
+        Users user = userService.findByUsername(email).get();
+        List<Hotel> hotels = hotelRepository.findHotelsByUserId(user.getId());
+        List<HotelCard> hotelsCard = new ArrayList<>();
+        for (int i = 0; i < hotels.size(); i++) {
+            hotelsCard.add(convertToHotelCard(hotels.get(i)));
+        }
+        return hotelsCard;
+    }
     
 }
